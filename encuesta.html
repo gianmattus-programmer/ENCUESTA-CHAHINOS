@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Satisfacción - Chahino Studio</title>
+    <!-- Tailwind CSS para el diseño profesional -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Colores extraídos de tu logo */
+        :root {
+            --ch-blue: #0076CE;
+            --ch-orange: #F37021;
+        }
+        .text-ch-blue { color: var(--ch-blue); }
+        .text-ch-orange { color: var(--ch-orange); }
+        .bg-ch-blue { background-color: var(--ch-blue); }
+        .bg-ch-orange { background-color: var(--ch-orange); }
+        .border-ch-orange { border-color: var(--ch-orange); }
+        
+        /* Estilos para los botones de calificación */
+        .rating-btn {
+            transition: all 0.2s ease;
+        }
+        .rating-btn:hover:not(.selected) {
+            background-color: #fff1e6; /* Naranja muy claro */
+            border-color: var(--ch-orange);
+            color: var(--ch-orange);
+        }
+        .rating-btn.selected {
+            background-color: var(--ch-orange);
+            border-color: var(--ch-orange);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(243, 112, 33, 0.3);
+        }
+        
+        /* --- NUEVOS ESTILOS 3D Y PARALLAX --- */
+        .bg-shape {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            border-radius: 50%;
+            animation: float 12s infinite alternate ease-in-out;
+            opacity: 0.5;
+        }
+        .shape-1 { background: var(--ch-blue); width: 40vw; height: 40vw; top: -10%; left: -10%; }
+        .shape-2 { background: var(--ch-orange); width: 35vw; height: 35vw; bottom: -10%; right: -10%; animation-delay: -6s; }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            100% { transform: translate(60px, 90px) scale(1.1) rotate(15deg); }
+        }
+
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transform-style: preserve-3d;
+        }
+
+        /* Elementos que "flotan" dentro de la tarjeta 3D creando el Parallax */
+        .pop-out {
+            transform: translateZ(30px);
+        }
+        .pop-out-more {
+            transform: translateZ(50px);
+        }
+
+        /* Botones de calificación 3D */
+        .btn-3d {
+            box-shadow: 0 4px 0 #cbd5e1;
+            transform: translateY(0) translateZ(30px);
+            transition: all 0.15s ease;
+        }
+        .btn-3d:hover:not(.selected) {
+            transform: translateY(2px) translateZ(30px);
+            box-shadow: 0 2px 0 #cbd5e1;
+        }
+        .btn-3d:active {
+            transform: translateY(4px) translateZ(30px);
+            box-shadow: 0 0 0 transparent;
+        }
+        .btn-3d.selected {
+            transform: translateY(4px) translateZ(50px) scale(1.1);
+            box-shadow: 0 10px 20px -5px rgba(243, 112, 33, 0.6);
+            border-color: var(--ch-orange);
+            background-color: var(--ch-orange);
+            color: white;
+        }
+        
+        /* Animación de entrada fluida */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-entrance {
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+    <!-- Librería para el efecto 3D Tilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" xintegrity="sha512-wC/cunGGDjXSl9OHru0Ru000sSlAENwe/hO/fzUeT+Ym4yT+Zbb5oO0Q8Eitk1hO0s+OEqwQ8+uJ5wZg6A4Mww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center py-12 px-4 overflow-x-hidden relative bg-slate-50">
+
+    <!-- Fondos Parallax Animados -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <div class="max-w-2xl w-full glass-card rounded-2xl shadow-2xl animate-entrance" data-tilt data-tilt-max="4" data-tilt-speed="400" data-tilt-perspective="1000">
+        <!-- Cabecera -->
+        <div id="formHeader" class="bg-white/60 border-b border-gray-100/50 p-8 text-center rounded-t-2xl pop-out preserve-3d">
+            <!-- Representación de tu Logo en Texto (Puedes reemplazarlo por tu imagen <img> real) -->
+            <h1 class="text-5xl font-bold tracking-tighter mb-2 transform transition hover:scale-110 duration-300 pop-out-more cursor-default">
+                <img src="ENCU.png" alt="Chahino Studio" class="mx-auto w-48">
+            </h1>
+            <h2 class="text-2xl font-semibold text-gray-800 mt-4 pop-out-more">Ayúdanos a mejorar</h2>
+            <p class="text-gray-600 mt-2 text-sm pop-out">Tus comentarios nos ayudan a seguir ofreciendo un servicio de excelencia. Por favor, califica del 1 al 5.</p>
+        </div>
+
+        <!-- Formulario -->
+        <!-- Utilizamos FormSubmit para enviar directo a tu correo mediante AJAX -->
+        <form id="surveyForm" action="https://formsubmit.co/chahinostudio@gmail.com" method="POST" class="p-8 space-y-8 pop-out preserve-3d" onsubmit="submitForm(event)">
+            
+            <!-- Configuraciones ocultas para el envío de correo -->
+            <input type="hidden" name="_subject" value="Nueva Reseña de Cliente - Chahino Studio">
+            <input type="hidden" name="_template" value="table">
+            <!-- Este campo enviará el promedio final -->
+            <input type="hidden" name="Promedio_Final" id="hiddenTotalScore" value="0.0 puntos de 5">
+            <!-- Deshabilitar Captcha para una experiencia más fluida (opcional) -->
+            <input type="hidden" name="_captcha" value="false">
+
+            <!-- Datos del Cliente -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pop-out-more">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tu Nombre o Empresa *</label>
+                    <input type="text" name="Cliente" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0076CE] focus:border-[#0076CE] outline-none transition bg-white/80 backdrop-blur-sm shadow-inner hover:shadow-md" placeholder="Ej. Juan Pérez">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico *</label>
+                    <input type="email" name="Email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0076CE] focus:border-[#0076CE] outline-none transition bg-white/80 backdrop-blur-sm shadow-inner hover:shadow-md" placeholder="tucorreo@ejemplo.com">
+                </div>
+            </div>
+
+            <hr class="border-gray-200/50 pop-out">
+
+            <!-- Contenedor de Preguntas generadas dinámicamente -->
+            <div id="questionsContainer" class="space-y-6 preserve-3d">
+                <!-- Las preguntas se inyectan vía JavaScript -->
+            </div>
+
+            <!-- Comentarios Adicionales -->
+            <div class="pop-out-more">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Breve Reseña / Comentarios (Opcional)</label>
+                <textarea name="Comentario" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0076CE] focus:border-[#0076CE] outline-none transition resize-none bg-white/80 backdrop-blur-sm shadow-inner hover:shadow-md" placeholder="¿Qué fue lo que más te gustó de nuestro servicio?"></textarea>
+                <p class="text-xs text-gray-400 mt-1">Este comentario podría ser publicado en nuestra web.</p>
+            </div>
+
+            <!-- Resumen de Puntuación -->
+            <div class="bg-slate-50/80 backdrop-blur-sm p-4 rounded-xl flex items-center justify-between border border-gray-100 pop-out-more shadow-md transition-all hover:scale-[1.02] cursor-default">
+                <span class="font-medium text-gray-700">Promedio de Calificación:</span>
+                <div class="text-2xl font-bold text-ch-blue">
+                    <span id="displayScore">0.0</span> <span class="text-sm text-gray-400 font-normal">/ 5</span>
+                </div>
+            </div>
+
+            <!-- Mensaje de error (oculto por defecto) -->
+            <p id="errorMessage" class="text-red-500 text-sm hidden font-medium text-center pop-out">Por favor, responde a todas las preguntas antes de enviar.</p>
+
+            <!-- Botón de Envío -->
+            <button type="submit" id="submitBtn" class="w-full bg-ch-blue hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl shadow-[0_10px_20px_rgba(0,118,206,0.3)] hover:shadow-[0_15px_25px_rgba(0,118,206,0.4)] transition-all duration-300 transform hover:-translate-y-1 pop-out-more flex justify-center items-center gap-2 text-lg">
+                Enviar Encuesta
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+            </button>
+            <p class="text-center text-xs text-gray-400 mt-4 pop-out">Tus datos están seguros y nos ayudan a mejorar.</p>
+        </form>
+
+        <!-- Mensaje de Éxito (Oculto por defecto) -->
+        <div id="successMessage" class="hidden p-12 text-center pop-out preserve-3d flex-col items-center justify-center space-y-6 min-h-[400px]">
+            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto pop-out-more shadow-[0_0_40px_rgba(34,197,94,0.4)] transition-transform duration-500 hover:scale-110">
+                <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-4xl font-bold text-gray-800 pop-out-more">¡Gracias!</h2>
+            <p class="text-gray-600 text-lg pop-out">Tus comentarios han sido enviados con éxito y nos ayudarán a seguir mejorando.</p>
+            <button type="button" onclick="location.reload()" class="mt-8 text-ch-blue font-semibold hover:underline pop-out transition-all hover:text-blue-800">Enviar otra respuesta</button>
+        </div>
+    </div>
+
+    <!-- Footer Llamativo Tipo Píldora -->
+    <footer class="mt-10 z-10 animate-entrance" style="animation-delay: 0.3s;">
+        <div class="bg-white/40 backdrop-blur-md border border-white/60 shadow-lg px-8 py-3 rounded-full flex items-center justify-center gap-3 transition-all hover:scale-105 hover:bg-white/60 duration-300 cursor-default">
+            <span class="text-sm text-slate-600 font-medium">Diseñado con</span>
+            <svg class="w-4 h-4 text-[#F37021] animate-pulse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-sm text-slate-600 font-medium">por</span>
+            <a href="#" target="_blank" class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0076CE] to-[#F37021] text-base tracking-tight hover:opacity-80 transition-opacity">
+                Chahino Studio
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Definir las preguntas
+        const questions = [
+            { id: 'q1', text: '¿Cómo calificarías la calidad del servicio/producto final?' },
+            { id: 'q2', text: '¿Se cumplieron los plazos de entrega acordados?' },
+            { id: 'q3', text: '¿Cómo evaluarías la comunicación y atención recibida?' },
+            { id: 'q4', text: '¿Qué tan probable es que recomiendes Chahino Studio?' }
+        ];
+
+        // Estado para guardar las respuestas (0 significa no respondido)
+        const scores = {
+            q1: 0, q2: 0, q3: 0, q4: 0
+        };
+
+        const container = document.getElementById('questionsContainer');
+
+        // Generar el HTML de las preguntas
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            let buttonsHtml = '';
+            
+            // Generar los 5 botones para cada pregunta
+            for(let i=1; i<=5; i++) {
+                buttonsHtml += `
+                    <button type="button" 
+                            onclick="selectRating('${q.id}', ${i})" 
+                            id="btn-${q.id}-${i}"
+                            class="rating-btn btn-3d w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-gray-200 text-gray-500 font-semibold text-lg focus:outline-none bg-white">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            questionDiv.innerHTML = `
+                <div class="transition-transform duration-300 hover:translate-x-1 preserve-3d">
+                    <p class="text-gray-800 font-medium mb-3 pop-out-more">${index + 1}. ${q.text}</p>
+                    <div class="flex justify-between max-w-sm pop-out-more">
+                        ${buttonsHtml}
+                    </div>
+                    <!-- Input oculto que almacena el valor para enviarlo por correo -->
+                    <input type="hidden" name="${q.text}" id="input-${q.id}" value="">
+                </div>
+            `;
+            container.appendChild(questionDiv);
+        });
+
+        // Función que se ejecuta al hacer clic en un número
+        function selectRating(questionId, value) {
+            // Actualizar estado
+            scores[questionId] = value;
+
+            // Actualizar input oculto para FormSubmit
+            document.getElementById(`input-${questionId}`).value = value;
+
+            // Limpiar clases de todos los botones de esta pregunta
+            for(let i=1; i<=5; i++) {
+                document.getElementById(`btn-${questionId}-${i}`).classList.remove('selected');
+            }
+
+            // Añadir clase 'selected' al botón clickeado
+            document.getElementById(`btn-${questionId}-${value}`).classList.add('selected');
+
+            // Recalcular el total
+            calculateTotal();
+            
+            // Ocultar mensaje de error si existía
+            document.getElementById('errorMessage').classList.add('hidden');
+        }
+
+        // Calcular y mostrar el promedio total con decimales
+        function calculateTotal() {
+            const answeredScores = Object.values(scores).filter(val => val > 0);
+            let average = 0;
+            
+            if (answeredScores.length > 0) {
+                // Sumar las respuestas válidas
+                const sum = answeredScores.reduce((a, b) => a + b, 0);
+                // Dividir entre la cantidad de preguntas respondidas y fijar 1 decimal
+                average = (sum / answeredScores.length).toFixed(1);
+            } else {
+                average = (0).toFixed(1);
+            }
+            
+            // Actualizar UI
+            document.getElementById('displayScore').innerText = average;
+            
+            // Actualizar el input que se enviará al correo
+            document.getElementById('hiddenTotalScore').value = `${average} puntos de 5`;
+        }
+
+        // Validar antes de enviar
+        function validateForm() {
+            // Comprobar si hay alguna pregunta con valor 0
+            const isComplete = Object.values(scores).every(val => val > 0);
+            
+            if (!isComplete) {
+                document.getElementById('errorMessage').classList.remove('hidden');
+                return false; // Detiene el envío
+            }
+            return true; // Permite el envío
+        }
+
+        // Enviar formulario por AJAX para evitar recargas o nuevas pestañas
+        async function submitForm(event) {
+            event.preventDefault(); // Evita que se abra otra pestaña o recargue
+            
+            if (!validateForm()) return;
+
+            const form = event.target;
+            const btn = document.getElementById('submitBtn');
+            const originalBtnHtml = btn.innerHTML;
+
+            // Cambiar botón a estado de carga
+            btn.innerHTML = `<svg class="animate-spin h-6 w-6 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span class="ml-2">Enviando...</span>`;
+            btn.disabled = true;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            btn.classList.remove('hover:-translate-y-1');
+
+            const formData = new FormData(form);
+
+            try {
+                // Se agrega /ajax/ a la URL de FormSubmit para que devuelva JSON y no redirija
+                const response = await fetch('https://formsubmit.co/ajax/chahinostudio@gmail.com', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Transición suave: ocultar form, mostrar mensaje
+                    document.getElementById('formHeader').classList.add('hidden');
+                    form.classList.add('hidden');
+                    
+                    const successDiv = document.getElementById('successMessage');
+                    successDiv.classList.remove('hidden');
+                    successDiv.classList.add('flex', 'animate-entrance');
+
+                    // 🎊 Lluvia de confeti triunfal con los colores de Chahino Studio
+                    confetti({
+                        particleCount: 150,
+                        spread: 80,
+                        origin: { y: 0.6 },
+                        colors: ['#0076CE', '#F37021', '#ffffff']
+                    });
+                } else {
+                    throw new Error('Error en el envío');
+                }
+            } catch (error) {
+                alert('Hubo un error al enviar la encuesta. Por favor, revisa tu conexión e inténtalo nuevamente.');
+                // Restaurar botón
+                btn.innerHTML = originalBtnHtml;
+                btn.disabled = false;
+                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                btn.classList.add('hover:-translate-y-1');
+            }
+        }
+    </script>
+</body>
+</html>
