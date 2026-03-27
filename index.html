@@ -150,6 +150,36 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico *</label>
                     <input type="email" name="Email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0076CE] focus:border-[#0076CE] outline-none transition bg-white/80 backdrop-blur-sm shadow-inner hover:shadow-md" placeholder="tucorreo@ejemplo.com">
                 </div>
+                
+                <!-- NUEVOS CAMPOS: Servicio y Cargo (Con Dropdown Personalizado y Animado) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Servicio Recibido *</label>
+                    <div class="relative" id="custom-select-container">
+                        <!-- Select Trigger (Botón visible) -->
+                        <div id="custom-select-trigger" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-[#0076CE] focus-within:border-[#0076CE] outline-none transition bg-white/80 backdrop-blur-sm shadow-inner hover:shadow-md flex justify-between items-center cursor-pointer text-gray-500">
+                            <span id="custom-select-text" class="truncate">Selecciona un servicio</span>
+                            <div class="pointer-events-none flex items-center text-ch-orange transition-transform duration-300" id="custom-select-arrow">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Lista de Opciones Flotante -->
+                        <ul id="custom-select-options" class="absolute z-[100] w-full mt-2 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-2xl opacity-0 invisible transform -translate-y-2 transition-all duration-300 max-h-60 overflow-y-auto">
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Diseño Web">Diseño Web</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Branding">Branding</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Logo">Logo</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Brochure">Brochure</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Publicidad">Publicidad</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium last:border-0" data-value="Otro servicio de la agencia">Otro servicio de la agencia</li>
+                        </ul>
+                        <!-- Input oculto para que FormSubmit capture la respuesta -->
+                        <input type="hidden" name="Servicio" id="hidden-servicio" value="">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tu Función / Cargo en la Empresa *</label>
+                    <input type="text" name="Cargo" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0076CE] focus:border-[#0076CE] outline-none transition bg-white/80 backdrop-blur-sm shadow-inner hover:shadow-md" placeholder="Ej. CEO, Gerente de Marketing, etc.">
+                </div>
             </div>
 
             <hr class="border-gray-200/50 pop-out">
@@ -175,7 +205,7 @@
             </div>
 
             <!-- Mensaje de error (oculto por defecto) -->
-            <p id="errorMessage" class="text-red-500 text-sm hidden font-medium text-center pop-out">Por favor, responde a todas las preguntas antes de enviar.</p>
+            <p id="errorMessage" class="text-red-500 text-sm hidden font-medium text-center pop-out">Por favor, completa todos los campos requeridos.</p>
 
             <!-- Botón de Envío -->
             <button type="submit" id="submitBtn" class="w-full bg-ch-blue hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl shadow-[0_10px_20px_rgba(0,118,206,0.3)] hover:shadow-[0_15px_25px_rgba(0,118,206,0.4)] transition-all duration-300 transform hover:-translate-y-1 pop-out-more flex justify-center items-center gap-2 text-lg">
@@ -286,6 +316,10 @@
             const answeredScores = Object.values(scores).filter(val => val > 0);
             let average = 0;
             
+            // Llenar barra de progreso
+            const progressPercent = (answeredScores.length / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+
             if (answeredScores.length > 0) {
                 // Sumar las respuestas válidas
                 const sum = answeredScores.reduce((a, b) => a + b, 0);
@@ -302,13 +336,64 @@
             document.getElementById('hiddenTotalScore').value = `${average} puntos de 5`;
         }
 
+        // --- Lógica del Menú Desplegable Personalizado ---
+        const selectTrigger = document.getElementById('custom-select-trigger');
+        const selectOptions = document.getElementById('custom-select-options');
+        const selectText = document.getElementById('custom-select-text');
+        const hiddenServicio = document.getElementById('hidden-servicio');
+        const selectArrow = document.getElementById('custom-select-arrow');
+        const customSelectContainer = document.getElementById('custom-select-container');
+
+        selectTrigger.addEventListener('click', (e) => {
+            selectOptions.classList.toggle('opacity-0');
+            selectOptions.classList.toggle('invisible');
+            selectOptions.classList.toggle('-translate-y-2');
+            selectArrow.classList.toggle('rotate-180');
+            e.stopPropagation();
+        });
+
+        document.querySelectorAll('#custom-select-options li').forEach(option => {
+            option.addEventListener('click', (e) => {
+                selectText.textContent = e.target.textContent;
+                selectText.classList.remove('text-gray-500');
+                selectText.classList.add('text-gray-900', 'font-medium');
+                hiddenServicio.value = e.target.getAttribute('data-value');
+                
+                // Cerrar dropdown
+                selectOptions.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                selectArrow.classList.remove('rotate-180');
+                
+                // Ocultar mensaje de error si existía
+                document.getElementById('errorMessage').classList.add('hidden');
+            });
+        });
+
+        // Cerrar el menú si se hace clic fuera de él
+        document.addEventListener('click', (e) => {
+            if (!customSelectContainer.contains(e.target)) {
+                selectOptions.classList.add('opacity-0', 'invisible', '-translate-y-2');
+                selectArrow.classList.remove('rotate-180');
+            }
+        });
+
         // Validar antes de enviar
         function validateForm() {
-            // Comprobar si hay alguna pregunta con valor 0
-            const isComplete = Object.values(scores).every(val => val > 0);
+            // Comprobar si hay alguna pregunta con valor 0 y si el servicio fue seleccionado
+            const isScoresComplete = Object.values(scores).every(val => val > 0);
+            const isServiceSelected = hiddenServicio.value !== '';
             
-            if (!isComplete) {
-                document.getElementById('errorMessage').classList.remove('hidden');
+            if (!isScoresComplete || !isServiceSelected) {
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.classList.remove('hidden');
+                
+                if (!isServiceSelected && isScoresComplete) {
+                    errorMsg.innerText = "Por favor, selecciona el servicio recibido.";
+                } else if (!isScoresComplete && isServiceSelected) {
+                    errorMsg.innerText = "Por favor, responde a todas las preguntas.";
+                } else {
+                    errorMsg.innerText = "Por favor, selecciona el servicio y responde las preguntas.";
+                }
+                
                 return false; // Detiene el envío
             }
             return true; // Permite el envío
