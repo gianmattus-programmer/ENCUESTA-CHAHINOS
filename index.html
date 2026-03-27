@@ -8,6 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Regla estricta para evitar que la pantalla baile a los lados en celulares */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
@@ -108,10 +114,10 @@
             animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
-    <!-- Librería para el efecto 3D Tilt -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" xintegrity="sha512-wC/cunGGDjXSl9OHru0Ru000sSlAENwe/hO/fzUeT+Ym4yT+Zbb5oO0Q8Eitk1hO0s+OEqwQ8+uJ5wZg6A4Mww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Librería para el efecto de Confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
-<body class="min-h-screen flex flex-col justify-center items-center py-12 px-4 overflow-x-hidden relative bg-slate-50">
+<body class="min-h-screen flex flex-col justify-center items-center py-12 px-4 overflow-x-hidden relative w-full max-w-full bg-slate-50">
 
     <!-- Fondos Parallax Animados -->
     <div class="bg-shape shape-1"></div>
@@ -170,6 +176,11 @@
                             <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Logo">Logo</li>
                             <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Brochure">Brochure</li>
                             <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Publicidad">Publicidad</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Gestión de Redes Sociales">Gestión de Redes Sociales</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="SEO y Posicionamiento">SEO y Posicionamiento</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Fotografía y Video">Fotografía y Video</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Desarrollo de Software / App">Desarrollo de Software / App</li>
+                            <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium border-b border-gray-100 last:border-0" data-value="Consultoría / Asesoría">Consultoría / Asesoría</li>
                             <li class="px-4 py-3 hover:bg-ch-blue hover:text-white cursor-pointer transition-colors text-gray-700 font-medium last:border-0" data-value="Otro servicio de la agencia">Otro servicio de la agencia</li>
                         </ul>
                         <!-- Input oculto para que FormSubmit capture la respuesta -->
@@ -269,7 +280,7 @@
                     <button type="button" 
                             onclick="selectRating('${q.id}', ${i})" 
                             id="btn-${q.id}-${i}"
-                            class="rating-btn btn-3d w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-gray-200 text-gray-500 font-semibold text-lg focus:outline-none bg-white">
+                            class="rating-btn btn-3d w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border-2 border-gray-200 text-gray-500 font-semibold text-base md:text-lg focus:outline-none bg-white">
                         ${i}
                     </button>
                 `;
